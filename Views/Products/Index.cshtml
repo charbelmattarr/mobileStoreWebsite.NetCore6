@@ -6,9 +6,17 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+ @if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("admin"))
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+
+    }
+
+}
 <table class="table">
     <thead>
         <tr>
@@ -52,7 +60,7 @@
                 @Html.DisplayFor(modelItem => item.ProductYear)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProductPrice)
+                @Html.DisplayFor(modelItem => item.ProductPrice)$
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ProductAvailability)
@@ -66,11 +74,21 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Model.ModelId)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+           <td>
+            @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("admin")){
+            
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> 
+        
+                
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> 
                 <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
-            </td>
+                     }
+                        }       
+                 <a asp-controller="Orders" asp-action="Create" asp-route-id="@item.ProductId">Create</a>
+            
+                        </td>
         </tr>
 }
     </tbody>

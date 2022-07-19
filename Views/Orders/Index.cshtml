@@ -37,7 +37,7 @@
                 @Html.DisplayNameFor(model => model.Product)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.IdentityUser)
             </th>
             <th></th>
         </tr>
@@ -67,10 +67,10 @@
                 @Html.DisplayFor(modelItem => item.OrderDeliveredData)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Product.ProductId)
+                @Html.DisplayFor(modelItem => item.Product.ProductName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.UserId)
+                @Html.DisplayFor(modelItem => item.IdentityUser.UserName)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
