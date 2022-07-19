@@ -13,6 +13,6 @@ namespace MobileStoreWebsiteV1._3.Data
         public DbSet<MobileStoreWebsiteV1._3.Models.Model>? Model { get; set; }
         public DbSet<MobileStoreWebsiteV1._3.Models.Order>? Order { get; set; }
         public DbSet<MobileStoreWebsiteV1._3.Models.Product>? Product { get; set; }
-        public DbSet<MobileStoreWebsiteV1._3.Models.User>? User { get; set; }
+
     }
 }
