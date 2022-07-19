@@ -14,9 +14,9 @@ namespace MobileStoreWebsiteV1._3.Models
         public string? OrderStatus { get; set; }
         public string? OrderDeliveredData { get; set; }
         public int? ProductId { get; set; }
-        public int? UserId { get; set; }
-
+        // public string? UserId { get; set; }
+        public string? IdentityUserId { get; set; }
         public virtual Product? Product { get; set; }
-        public virtual User? User { get; set; }
+        public virtual Microsoft.AspNetCore.Identity.IdentityUser? IdentityUser { get; set; }
     }
 }
