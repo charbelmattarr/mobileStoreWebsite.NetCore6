@@ -9,14 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using MobileStoreWebsiteV1._3.Data;
 using MobileStoreWebsiteV1._3.Models;
 
+
 namespace MobileStoreWebsiteV1._3.Controllers
 {
     public class ProductsController : Controller
     {
+        OrdersController ordersController;
         private readonly ApplicationDbContext _context;
 
         public ProductsController(ApplicationDbContext context)
-        {
+        { ordersController = new OrdersController(_context);
             _context = context;
         }
 
@@ -86,6 +88,21 @@ namespace MobileStoreWebsiteV1._3.Controllers
             ViewData["ModelId"] = new SelectList(_context.Model, "ModelId", "ModelId", product.ModelId);
             return View(product);
         }
+
+
+
+
+        // GET: Products/Create
+        [Authorize]
+        public IActionResult CreateOrder()
+        {
+
+
+            return View(); 
+        }
+
+      
+
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)

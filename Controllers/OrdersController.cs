@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Order.Include(o => o.Product).Include(o => o.User);
+            var applicationDbContext = _context.Order.Include(o => o.Product).Include(o => o.IdentityUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,7 +37,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
 
             var order = await _context.Order
                 .Include(o => o.Product)
-                .Include(o => o.User)
+                .Include(o => o.IdentityUser)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
@@ -50,7 +51,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
         public IActionResult Create()
         {
             ViewData["ProductId"] = new SelectList(_context.Set<Product>(), "ProductId", "ProductId");
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId");
+            ViewData["IdentityUserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id");
             return View();
         }
 
@@ -59,7 +60,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,OrderDate,OrderBalance,OrderStreet,OrderCity,OrderBuilding,OrderStatus,OrderDeliveredData,ProductId,UserId")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderId,OrderDate,OrderBalance,OrderStreet,OrderCity,OrderBuilding,OrderStatus,OrderDeliveredData,ProductId,IdentityUserId")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -68,9 +69,18 @@ namespace MobileStoreWebsiteV1._3.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Set<Product>(), "ProductId", "ProductId", order.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", order.UserId);
+            ViewData["IdentityUserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", order.IdentityUserId);
             return View(order);
         }
+
+
+
+        // GET: Orders/Create
+        public IActionResult Create1()
+        {
+            return View();
+        }
+
 
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -86,7 +96,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
                 return NotFound();
             }
             ViewData["ProductId"] = new SelectList(_context.Set<Product>(), "ProductId", "ProductId", order.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", order.UserId);
+            ViewData["IdentityUserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", order.IdentityUserId);
             return View(order);
         }
 
@@ -95,7 +105,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,OrderDate,OrderBalance,OrderStreet,OrderCity,OrderBuilding,OrderStatus,OrderDeliveredData,ProductId,UserId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderId,OrderDate,OrderBalance,OrderStreet,OrderCity,OrderBuilding,OrderStatus,OrderDeliveredData,ProductId,IdentityUserId")] Order order)
         {
             if (id != order.OrderId)
             {
@@ -123,7 +133,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ProductId"] = new SelectList(_context.Set<Product>(), "ProductId", "ProductId", order.ProductId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "UserId", "UserId", order.UserId);
+            ViewData["IdentityUserId"] = new SelectList(_context.Set<IdentityUser>(), "Id", "Id", order.IdentityUserId);
             return View(order);
         }
 
@@ -137,7 +147,7 @@ namespace MobileStoreWebsiteV1._3.Controllers
 
             var order = await _context.Order
                 .Include(o => o.Product)
-                .Include(o => o.User)
+                .Include(o => o.IdentityUser)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
